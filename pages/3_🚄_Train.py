@@ -77,7 +77,7 @@ def getAPI(api) -> str:
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
        time.sleep(2**try_number + random.random()*0.01) #exponential backoff
        return get_submission_records(client, since, try_number=try_number+1)
-    return response
+   return response
 
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
