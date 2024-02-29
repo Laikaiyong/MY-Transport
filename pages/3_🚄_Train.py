@@ -113,6 +113,7 @@ else:
         ["PYL", "MRT Putrajaya Line", "", "Normal Service"],
         ["ERL", "KLIA Ekspres / Transit", "", "Normal Service"]
     ], columns=[
+        "",
         "LineID",
         "Line",
         "Remark",
@@ -124,6 +125,7 @@ else:
         ["Not Spotted", "25", "7", "8", "15", "12"],
         ["In Service", "59", "2", "41", "36", "38"]
     ], columns=[
+        "",
         "Kelana Jaya",
         "Monorail",
         "Putrajaya",
