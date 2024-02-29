@@ -78,7 +78,7 @@ def getAPI(api) -> str:
    response = ""
    try:
     #    response = json.loads(get(api).text)
-        response = get(api).text.strip("'<>() ")
+        response = get(api, headers={'Host': 'example.com', 'Accept': 'application/json', 'Content-Type': 'application/json' }).text.strip("'<>() ")
         return json.loads(response)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
        time.sleep(30)
