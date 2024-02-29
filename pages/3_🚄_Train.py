@@ -4,6 +4,7 @@ import pandas as pd
 from requests import get
 
 import requests
+# from forcediphttpsadapter.adapters import ForcedIPHTTPSAdapter
 
 import os
 import json
@@ -78,11 +79,18 @@ def getAPI(api) -> str:
    response = ""
    try:
     #    response = json.loads(get(api).text)
-        response = get(api, headers={'Host': 'example.com', 'Accept': 'application/json', 'Content-Type': 'application/json' }).text.strip("'<>() ")
+        # session = requests.Session()
+        # session.mount(api, ForcedIPHTTPSAdapter(dest_ip='103.191.76.170')) # type the desired ip
+        # response = session.get(api, verify=False)
+        # print(response.text)
+        response = get(api, headers={'Host': 'https://www.mtrec.name.my/', 'Accept': 'application/json', 'Content-Type': 'application/json' }).text
+        if not response:
+            return json.loads("")
+        return json.loads("")
         return json.loads(response)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
-       time.sleep(30)
-       return getAPI(api)
+        time.sleep(30)
+        return getAPI(api)
 
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
