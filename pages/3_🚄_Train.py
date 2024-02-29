@@ -3,6 +3,8 @@ from google.protobuf.json_format import MessageToDict
 import pandas as pd
 from requests import get
 
+import requests
+
 import os
 import json
 
