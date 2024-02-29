@@ -77,7 +77,8 @@ tab1, tab2 = st.tabs(["Line Status", "Train Status"])
 def getAPI(api) -> str:
    response = ""
    try:
-       response = json.loads(get(api).text)
+    #    response = json.loads(get(api).text)
+    repsponse = get(api).json()
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
        time.sleep(30)
        return getAPI(api)
