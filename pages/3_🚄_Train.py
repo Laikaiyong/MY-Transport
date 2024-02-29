@@ -78,11 +78,11 @@ def getAPI(api) -> str:
    response = ""
    try:
     #    response = json.loads(get(api).text)
-    repsponse = get(api).json()
+        response = get(api).text.strip("'<>() ")
+        return json.loads(response)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
        time.sleep(30)
        return getAPI(api)
-   return response
 
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
