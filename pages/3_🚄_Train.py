@@ -4,6 +4,7 @@ import pandas as pd
 from requests import get
 
 import os
+import json
 
 import streamlit as st
 
@@ -75,8 +76,8 @@ ACTIVE_TRAIN_URL = "https://api.mtrec.name.my/api/spottersstatus"
 status_response = get(RAPID_STATUS_URL)
 active_response = get(ACTIVE_TRAIN_URL)
 
-status_data = status_response.json()
-active_data = active_response.json()
+status_data = json.loads(status_response.text)
+active_data = json.loads(active_response.text)
 
 
 status_df = pd.DataFrame(status_data["Data"])
