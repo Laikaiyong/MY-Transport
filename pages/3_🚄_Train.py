@@ -119,10 +119,16 @@ else:
         "Status"
     ])
     active_df = pd.DataFrame([
-        ["Line", "KJL", "MRL", "PYL", "KGL", "AGSPL"]
-        ["Decommissioned", "13", "15", "0", "7", "0"]
-        ["Not Spotted", "25", "7", "8", "15", "12"]
+        ["Line", "KJL", "MRL", "PYL", "KGL", "AGSPL"],
+        ["Decommissioned", "13", "15", "0", "7", "0"],
+        ["Not Spotted", "25", "7", "8", "15", "12"],
         ["In Service", "59", "2", "41", "36", "38"]
+    ], columns=[
+        "Kelana Jaya",
+        "Monorail",
+        "Putrajaya",
+        "Kajang",
+        "Ampang / Sri Petaling"
     ])
 
 
