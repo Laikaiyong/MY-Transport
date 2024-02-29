@@ -77,8 +77,8 @@ def getAPI(api) -> str:
    try:
        response = json.loads(get(api).text)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
-       time.sleep(2**try_number + random.random()*0.01) #exponential backoff
-       return get_submission_records(client, since, try_number=try_number+1)
+       time.sleep(2**30 + random.random()*0.01) #exponential backoff
+       return getAPI(api)
    return response
 
 # KTM Tracking API
