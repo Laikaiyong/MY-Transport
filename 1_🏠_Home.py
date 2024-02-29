@@ -92,7 +92,7 @@ def render_page():
     
     folium.Marker(
         [3.8056856225280593, 103.3233851476217], popup=kuantan_popup,
-        icon=folium.Icon(color="grey")
+        icon=folium.Icon(color="black")
     ).add_to(m)
     folium.Marker(
         [3.315143565060173, 101.60099765655472], popup=kl_popup,

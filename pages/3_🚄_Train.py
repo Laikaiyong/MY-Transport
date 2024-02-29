@@ -7,6 +7,8 @@ import requests
 
 import os
 import json
+import time
+import random
 
 import streamlit as st
 
@@ -77,7 +79,7 @@ def getAPI(api) -> str:
    try:
        response = json.loads(get(api).text)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
-       time.sleep(2**30 + random.random()*0.01) #exponential backoff
+       time.sleep(30)
        return getAPI(api)
    return response
 
@@ -89,8 +91,8 @@ status_data = getAPI(RAPID_STATUS_URL)
 active_data = getAPI(ACTIVE_TRAIN_URL)
 
 
-status_df = pd.DataFrame(status_data["Data"])
-active_df = pd.DataFrame(active_data["Data"])
+status_df = pd.DataFrame(status_data["Data"]).astype(str)
+active_df = pd.DataFrame(active_data["Data"]).astype(str)
 
 
 with tab1:
