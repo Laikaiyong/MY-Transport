@@ -69,15 +69,22 @@ st.title("Any other Trains")
 
 tab1, tab2 = st.tabs(["Line Status", "Train Status"])
 
+
+def getAPI(api) -> str:
+   response = ""
+   try:
+       response = json.loads(get(api).text)
+   except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
+       time.sleep(2**try_number + random.random()*0.01) #exponential backoff
+       return get_submission_records(client, since, try_number=try_number+1)
+    return response
+
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
 ACTIVE_TRAIN_URL = "https://api.mtrec.name.my/api/spottersstatus"
- 
-status_response = get(RAPID_STATUS_URL)
-active_response = get(ACTIVE_TRAIN_URL)
 
-status_data = json.loads(status_response.text)
-active_data = json.loads(active_response.text)
+status_data = getAPI(RAPID_STATUS_URL)
+active_data = getAPI(ACTIVE_TRAIN_URL)
 
 
 status_df = pd.DataFrame(status_data["Data"])
