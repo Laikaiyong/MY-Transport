@@ -83,14 +83,13 @@ def getAPI(api) -> str:
         # session.mount(api, ForcedIPHTTPSAdapter(dest_ip='103.191.76.170')) # type the desired ip
         # response = session.get(api, verify=False)
         # print(response.text)
-        response = get(api, headers={'Host': 'https://www.mtrec.name.my/', 'Accept': 'application/json', 'Content-Type': 'application/json' }).text
-        if not response:
-            return json.loads("")
-        return json.loads("")
+        response = get(api, headers={'Accept': 'application/json', 'Content-Type': 'application/json' },
+            #            proxies={
+            # 'https': 'https://60.54.141.38:3128'}
+                    ).text
         return json.loads(response)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
-        time.sleep(30)
-        return getAPI(api)
+        st.write("Local ISP restricted")
 
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
