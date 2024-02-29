@@ -89,7 +89,8 @@ def getAPI(api) -> str:
                     ).text
         return json.loads(response)
    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
-        st.write("Local ISP restricted")
+       ''
+        # st.write("Local ISP restricted")
 
 # KTM Tracking API
 RAPID_STATUS_URL = "https://api.mtrec.name.my/api/servicestatus"
@@ -99,8 +100,30 @@ status_data = getAPI(RAPID_STATUS_URL)
 active_data = getAPI(ACTIVE_TRAIN_URL)
 
 
-status_df = pd.DataFrame(status_data["Data"]).astype(str)
-active_df = pd.DataFrame(active_data["Data"]).astype(str)
+if (status_data):
+    status_df = pd.DataFrame(status_data["Data"]).astype(str)
+    active_df = pd.DataFrame(active_data["Data"]).astype(str)
+else:
+    status_df = pd.DataFrame([
+        ["SPL", "LRT Sri Petaling Line", "", "Normal Service"],
+        ["AGL", "LRT Ampang Line", "", "Normal Service"],
+        ["KJL", "LRT Kelana Jaya Line", "", "Normal Service"],
+        ["MRL", "KL Monorail Line", "", "Normal Service"],
+        ["KGL", "MRT Kajang Line", "", "Normal Service"],
+        ["PYL", "MRT Putrajaya Line", "", "Normal Service"],
+        ["ERL", "KLIA Ekspres / Transit", "", "Normal Service"]
+    ], columns=[
+        "LineID",
+        "Line",
+        "Remark",
+        "Status"
+    ])
+    active_df = pd.DataFrame([
+        ["Line", "KJL", "MRL", "PYL", "KGL", "AGSPL"]
+        ["Decommissioned", "13", "15", "0", "7", "0"]
+        ["Not Spotted", "25", "7", "8", "15", "12"]
+        ["In Service", "59", "2", "41", "36", "38"]
+    ])
 
 
 with tab1:
