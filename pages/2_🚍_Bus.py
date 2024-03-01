@@ -15,6 +15,8 @@ import json
 import streamlit as st
 
 import folium
+from folium.plugins import MarkerCluster
+from folium.plugins import Search
 from streamlit_folium import st_folium
 
 st.set_page_config(
@@ -108,9 +110,11 @@ with tab1:
     match option:
         case 'rapid-bus-kl':
             ip_address = [3.315143565060173, 101.60099765655472]
+            df["trip.routeId"] = df["trip.routeId"].str[:-1] 
 
         case 'rapid-bus-kuantan': 
             ip_address = [3.8056856225280593, 103.3233851476217]
+            df["trip.routeId"] = df["trip.routeId"].str[:-1] 
         
         case 'rapid-bus-penang':
             ip_address = [5.320985318929512, 100.36447204836247]
@@ -122,6 +126,7 @@ with tab1:
         ip_address, zoom_start=11
     )
 
+    marker_cluster = MarkerCluster().add_to(m)
     if option == 'mybas-johor':
         for index, row in df.iterrows():
             bus_pin = folium.CustomIcon(icon_image= "https://cdn-icons-png.flaticon.com/512/183/183756.png", icon_size=(30, 30))
@@ -141,8 +146,8 @@ with tab1:
             folium.Marker(
                 [row["position.latitude"], row["position.longitude"]],
                 icon=bus_pin,
-                popup=popup, tooltip=row["trip.routeId"]
-            ).add_to(m)
+                popup=popup, tooltip=row["trip.routeId"], name=row["trip.routeId"]
+            ).add_to(marker_cluster)
     else:
         for index, row in df.iterrows():
             bus_pin = folium.CustomIcon(icon_image= "https://cdn-icons-png.flaticon.com/512/183/183756.png", icon_size=(30, 30))
@@ -164,9 +169,16 @@ with tab1:
             folium.Marker(
                 [row["position.latitude"], row["position.longitude"]],
                 icon=bus_pin,
-                popup=popup, tooltip=row["trip.routeId"]
-            ).add_to(m)
-
+                popup=popup, tooltip=row["trip.routeId"],
+                name=row["trip.routeId"]
+            ).add_to(marker_cluster)
+    
+    servicesearch = Search(
+        layer=marker_cluster,
+        search_label="name",
+        placeholder='Search for a route id (e.g. T410)',
+        collapsed=False,
+    ).add_to(m)
     st_folium(m, width=725, returned_objects=[])
 
     # "https://rapid-track.vercel.app/api/track?route=173"
